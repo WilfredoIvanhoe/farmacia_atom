@@ -3,6 +3,8 @@ $servername = "localhost";
 $username = "farmacia";
 $password = "farmacia";
 $dbname = "farmacia"; 
+$idVia = 0;
+$idMedida = 0;
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,7 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Cantidad,Medida,idConsumidor,FechaCad
+$sql = "SELECT Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Concentracion,Cantidad,Medida,idConsumidor,FechaCad,Lote
         FROM producto WHERE CodigoDeBarras ='".$_POST['codigo']."'";      
 $result = $conn->query($sql);
 
@@ -22,7 +24,14 @@ if ( $result->num_rows > 0) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+$sql = "SELECT Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Concentracion,Cantidad,Medida,idConsumidor,FechaCad,Lote
+        FROM producto WHERE CodigoDeBarras ='".$_POST['codigo']."'";      
+$result = $conn->query($sql);
+
 $conn->close();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,7 +142,7 @@ $conn->close();
 								<b>Vía de administración</b>
 							</td>
 							<td>	
-								<?php echo $row['idViaAdmin']?>
+								<?php echo $row['idViaDeAdmin']?>
 							</td>
 						</tr>
 						<tr>
@@ -141,7 +150,7 @@ $conn->close();
 								<b>Medicamento para</b>
 							</td>
 							<td>	
-								<?php echo $row['idCos']?>
+								<?php echo $row['idConsumidor']?>
 							</td>
 						</tr>
 					</table>	

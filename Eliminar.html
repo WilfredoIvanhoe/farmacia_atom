@@ -12,7 +12,7 @@
 		</tr>
 	</table>
 	<table style="margin: 0 auto;">
-		<tr>
+		<tr>		
 			<td>	
 				<b><p>¿Seguro que desea eliminar el producto?</p></b>
 			</td>
@@ -23,15 +23,23 @@
 			</td>
 		</tr>
 	</table>	
-	<table style="margin: 0 auto;">
-		<tr>
-			<td>	
-				<b><input type="button" onclick="location.href='Principal.html';" value="Sí"/></b>
-			</td>
-			<td>	
-				<b><input type="button" onclick="location.href='Principal.html';" value="No"/></b>
-			</td>
-		</tr>
-	</table>
+	<form method="POST" action="Eliminar.php">
+		<table style="margin: 0 auto;">
+			<tr>
+				<td>
+					<p><b>Codigo de barras: <input type="text" name="codigo"></b></p>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>	
+					<b><input type="submit"  value="Sí"/></b>
+				</td>
+				<td>	
+					<b><input type="button" onclick="location.href='Principal.html';" value="No"/></b>
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>
