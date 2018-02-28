@@ -24,7 +24,7 @@
 			
 			<!-- FORM -->
 			<div class="row light-blue lighten-3">
-				<form class="col s12">
+				<form class="col s12" action="AgregarDatos.php" method="POST">
 					<div class="row light-blue lighten-4">
 						<div class="s12 m12 center">
 							<h3>Registro de producto</h3>
@@ -51,12 +51,12 @@
 						</div>
 						<div  class="input-field col s4 m2">
 							<select id="med_0" name="med_1">
-								<option value="y1">mg</option>
-								<option value="y2">unidades</option>
-								<option value="y3">ml</option>
-								<option value="y4">gotas</option>
-								<option value="y5">grano</option>
-								<option value="y6">lt</option>
+								<option value="1">mg</option>
+								<option value="2">unidades</option>
+								<option value="3">ml</option>
+								<option value="4">gotas</option>
+								<option value="5">grano</option>
+								<option value="6">lt</option>
 							</select>
 							<label for="med_0">Medida 1</label>
 						</div>
@@ -100,12 +100,12 @@
 						</div>
 						<div class="input-field col s3 m3">	
 							<select id="medidas" name="medidas">
-								<option value="y1">mg</option>
-								<option value="y2">unidades</option>
-								<option value="y3">ml</option>
-								<option value="y4">gotas</option>
-								<option value="y5">grano</option>
-								<option value="y6">lt</option>
+								<option value="1">mg</option>
+								<option value="2">unidades</option>
+								<option value="3">ml</option>
+								<option value="4">gotas</option>
+								<option value="5">grano</option>
+								<option value="6">lt</option>
 							</select>
 							<label>Medidas</label>
 						</div>
@@ -113,25 +113,24 @@
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s6 m6">
 							<select id="presentacion" name="presentacion" >
-								<option value="x1">Tabletas</option>
-								<option value="x2">Perlas</option>
-								<option value="x3">Cápsulas</option>
-								<option value="x4">Polvos</option>
-								<option value="x5">Pastillas</option>
-								<option value="x6">Supositorios</option>
-								<option value="x7">Pastillas</option>
-								<option value="x8">Óvulos</option>
-								<option value="x9">Inyecciones</option>
+								<option value="1">Tabletas</option>
+								<option value="2">Perlas</option>
+								<option value="3">Cápsulas</option>
+								<option value="4">Polvos</option>
+								<option value="5">Pastillas</option>
+								<option value="6">Supositorios</option>
+								<option value="7">Pastillas</option>
+								<option value="8">Óvulos</option>
+								<option value="9">Inyecciones</option>
 							</select>
 							<label>Presentación</label>
 						</div>
 						<div class="input-field col s6 m6">
 							<select id="via" name="via">
-								<option value="z1">Oral</option>
-								<option value="z2">Rectal</option>
-								<option value="z3">Sublingual</option>
-								<option value="z4">Rectal</option>
-								<option value="z5">Respiratoria</option>
+								<option value="1">Oral</option>
+								<option value="2">Rectal</option>
+								<option value="3">Sublingual</option>
+								<option value="4">Respiratoria</option>
 							</select>
 							<label>Vía de administración</label>
 						</div>
@@ -139,9 +138,9 @@
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s12 m12">
 							<select name>
-								<option value="a1">Adultos</option>
-								<option value="a2">Infantes</option>
-								<option value="a3">Pediatricos</option>
+								<option value="1">Adultos</option>
+								<option value="2">Infantes</option>
+								<option value="3">Pediatricos</option>
 							</select>
 							<label>Medicamento para</label>
 						</div>
@@ -149,7 +148,7 @@
 					<input id="num_ing" type="hidden" name="num_ing" value="1">
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s12 m12">
-							<button class="btn waves-effect waves-light" type="submit" name="action" action="agregar.php">
+							<button class="btn waves-effect waves-light" type="submit" name="action">
 								Agregar <i class="material-icons right">send</i>
 							</button>
 						</div>
