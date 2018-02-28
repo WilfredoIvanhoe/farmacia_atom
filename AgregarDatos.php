@@ -26,7 +26,7 @@ $medidas = $_POST['medidas'];
 $presentacion = $_POST['presentacion'];
 $via = $_POST['via'];
 
-$sql = "INSERT INTO producto(Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Cantidad,Medida,idConsumidor,fechaCad)
+$sql = "INSERT INTO producto(Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Cantidad,Medida,idConsumidor,FechaCad)
         VALUES ('".$name."','".$codigo."','".$presentacion."','".$via."','1','".$precio_un."','".$precio_pub."','".$cantidad."','".$medidas."','1','".$fecha."')";
 
 //echo "<p>" . $sql . "</p>";

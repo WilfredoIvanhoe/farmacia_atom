@@ -25,38 +25,40 @@
 			<div class="row">
 				<b><p>Buscar un producto</p></b>
 			</div>
-		
-		
-			<div class="row">
-				<b>Código de Barras</b>
-			</div>
-			<div class="row">
-				<input type="text">
-			</div>
-		
-		
-			<div class="row">
-				<b>Nombre</b>
-			</div>
-			<div class="row">
-				<b><input type="text"></b>
-			</div>	
-		
-		
-			<div class="row">
-				<b>Ingrediente Activo</b>
-			</div>
+			
+			<div class="row light-blue lighten-3">
+				<form class="col s12 m12 l12" action="Consultar.php" method="POST">
+					<div class="row">
+						<b>Código de Barras</b>
+					</div>
+					<div class="row">
+						<input type="text" name="codigo">
+					</div>
 				
-			<div class="row">
-				<b><input type="text"></b>
+				
+					<div class="row">
+						<b>Nombre</b>
+					</div>
+					<div class="row">
+						<b><input type="text"></b>
+					</div>	
+				
+				
+					<div class="row">
+						<b>Ingrediente Activo</b>
+					</div>
+						
+					<div class="row">
+						<b><input type="text"></b>
+					</div>
+					
+					<div class="row">
+						<div class="col s6 m6 push-m5"><input class="waves-effect waves-light btn" type="submit" value="Consultar"/></div>
+					</div>
+				</form>
 			</div>
-		
 			<div class="row">
-				<div class="col s6 m3"><input class="waves-effect waves-light btn" type="button" onclick="location.href='Consultar.html';" value="Consultar"/></div>
-			
-			
 				<div class="col s6 m3"><input class="waves-effect waves-light btn" type="button" onclick="location.href='Actualizar.html';" value="Actualizar"/></div>
-			
 			
 				<div class="col s6 m3"><input class="waves-effect waves-light btn" type="button" onclick="location.href='Eliminar.html';" value="Eliminar"/></div>
 
@@ -64,9 +66,8 @@
 			</div>
 			
 			<div class="row">
-					<div class="col s12 m4 push-m4"><input class="waves-effect waves-light btn" type="button" onclick="location.href='Login.html';" value="Salir"/></div>
+				<div class="col s12 m4 push-m4"><input class="waves-effect waves-light btn" type="button" onclick="location.href='Login.html';" value="Salir"/></div>
 			</div>
 		</div>
-	
 	</body>
 </html>
