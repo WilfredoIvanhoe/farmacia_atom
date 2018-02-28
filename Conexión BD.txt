@@ -1,0 +1,15 @@
+Conexión base de datos: Preparar conexión a BD ("conectar.php")
+
+<?php
+$host = "127.0.0.1"; 
+$usuario = "user"; 
+$password = "contraseña"; 
+$conectar = mysql_connect($host, $usuario, $password);
+?>
+
+Seleccionar base de datos 
+
+<?
+include("conectar.php")
+mysql_select_db("nombre_bd", $conectar);
+?>
