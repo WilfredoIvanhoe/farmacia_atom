@@ -24,10 +24,10 @@
 			
 			<!-- FORM -->
 			<div class="row light-blue lighten-3">
-				<form class="col s12">
+				<form class="col s12" action="AgregarDatos.php" method="POST">
 					<div class="row light-blue lighten-4">
 						<div class="s12 m12 center">
-							<h3>Actualización de producto</h3>
+							<h3>Registro de producto</h3>
 						</div>
 					</div>
 					<div class="row light-blue lighten-5">
@@ -36,132 +36,115 @@
 							<label for="codigo">Código de barras</label>
 						</div>
 						<div class="input-field col s6 m6">
-							<input id="name" type="text" class="validate">
+							<input id="name" name="name" type="text" class="validate">
 							<label for="name">Nombre</label>
 						</div>
-					</div>					
+					</div>
 					<div id="ingredientes_wrapper" class="row light-blue lighten-5">
 						<div  class="input-field col s4 m5">
-							<input class="ingrediente_1" data-num="1" type="text">
-							<label for="ingrediente_1">Ingrediente Activo 1</label>
+							<input id="ingrediente_0" class="ingrediente" name="ingrediente_0" data-num="0" type="text">
+							<label for="ingrediente_0">Ingrediente Activo 1</label>
 						</div>
 						<div  class="input-field col s4 m5">
-							<input class="concent_1" data-num="1" type="text">
-							<label for="concent_1">Concentración 1</label>
+							<input id="concent_0" class="concent" name="concent_0" data-num="0" type="text">
+							<label for="concent_0">Concentración 1</label>
 						</div>
 						<div  class="input-field col s4 m2">
-							<select>
-								<option value="y1">mg</option>
-								<option value="y2">unidades</option>
-								<option value="y3">ml</option>
-								<option value="y4">gotas</option>
-								<option value="y5">grano</option>
-								<option value="y6">lt</option>
+							<select id="med_0" name="med_1">
+								<option value="1">mg</option>
+								<option value="2">unidades</option>
+								<option value="3">ml</option>
+								<option value="4">gotas</option>
+								<option value="5">grano</option>
+								<option value="6">lt</option>
 							</select>
-							<label for="med_1">Medida 1</label>
+							<label for="med_0">Medida 1</label>
 						</div>
-					</div>	
+					</div>
 					<div class="row">	
 						<div class="input-field col s12 m12">
 							<a id="agregar_ingredientes" class="waves-effect waves-light btn">Agregar Ingrediente</a>
 						</div>
 					</div>
+				
 
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s6 m6">
-							<input id="fecha" type="text" class="datepicker">
+							<input id="fecha" name="fecha" type="text" class="datepicker">
 							<label for="fecha">Fecha de caducidad</label>
 						</div>
 						<div class="input-field col s6 m6">
-							<input id="lote" type="text" class="validate">
+							<input id="lote" name="lote" type="text" class="validate">
 							<label for="lote">Lote</label>
 						</div>
 					</div>
 
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s6 m6">
-							<input id="precio_pub" type="text" class="validate">
+							<input id="precio_pub" name="precio_pub" type="text" class="validate">
 							<label for="precio_pub">Precio al público</label>
 						</div>
 						<div class="input-field col s6 m6">
-							<input id="precio_un" type="text" class="validate">
+							<input id="precio_un" name="precio_un" type="text" class="validate">
 							<label for="precio_un">Precio unitario</label>
-						</div>
-					</div>					
-					<div class="row light-blue lighten-5">
-						<div class="input-field col s6 m6">
-							<input id="cantidad" type="text" class="validate">
-							<label for="cantidad">Cantidad</label>
-						</div>
-						<div class="input-field col s3 m3">
-							<input id="concentracion" type="text" class="validate">
-							<label for="concentracion">Concentración</label>
-						</div>
-						<div class="input-field col s3 m3">	
-							<select>
-								<option value="y1">mg</option>
-								<option value="y2">unidades</option>
-								<option value="y3">ml</option>
-								<option value="y4">gotas</option>
-								<option value="y5">grano</option>
-								<option value="y6">lt</option>
-							</select>
-							<label>Medidas</label>
 						</div>
 					</div>
 					<div class="row light-blue lighten-5">
-						<div class="input-field col s6 m6">
-							<select>
-								<option value="x1">Tabletas</option>
-								<option value="x2">Perlas</option>
-								<option value="x3">Cápsulas</option>
-								<option value="x4">Polvos</option>
-								<option value="x5">Pastillas</option>
-								<option value="x6">Supositorios</option>
-								<option value="x7">Pastillas</option>
-								<option value="x8">Óvulos</option>
-								<option value="x9">Inyecciones</option>
+		  				<div class="input-field col s4 m6">
+							<input id="cantidad" name="cantidad" type="text" class="validate">
+							<label for="cantidad">Cantidad</label>
+						</div>
+						<div class="input-field col s4 m3">
+							<select id="presentacion" name="presentacion" >
+								<option value="1">Tabletas</option>
+								<option value="2">Perlas</option>
+								<option value="3">Cápsulas</option>
+								<option value="4">Polvos</option>
+								<option value="5">Pastillas</option>
+								<option value="6">Supositorios</option>
+								<option value="7">Pastillas</option>
+								<option value="8">Óvulos</option>
+								<option value="9">Inyecciones</option>
 							</select>
 							<label>Presentación</label>
 						</div>
-						<div class="input-field col s6 m6">
-							<select>
-								<option value="z1">Oral</option>
-								<option value="z2">Rectal</option>
-								<option value="z3">Sublingual</option>
-								<option value="z4">Rectal</option>
-								<option value="z5">Respiratoria</option>
+						<div class="input-field col s4 m3">
+							<select id="via" name="via">
+								<option value="1">Oral</option>
+								<option value="2">Rectal</option>
+								<option value="3">Sublingual</option>
+								<option value="4">Respiratoria</option>
 							</select>
 							<label>Vía de administración</label>
 						</div>
 					</div>
 					<div class="row light-blue lighten-5">
 						<div class="input-field col s12 m12">
-							<select>
-								<option value="a1">Adultos</option>
-								<option value="a2">Infantes</option>
-								<option value="a3">Pediatricos</option>
+							<select name>
+								<option value="1">Adultos</option>
+								<option value="2">Infantes</option>
+								<option value="3">Pediatricos</option>
 							</select>
 							<label>Medicamento para</label>
 						</div>
 					</div>
+					<input id="num_ing" type="hidden" name="num_ing" value="1">
 					<div class="row light-blue lighten-5">
-						<div class="col s12 m12">
+						<div class="input-field col s12 m12">
 							<button class="btn waves-effect waves-light" type="submit" name="action">
-								Cambiar <i class="material-icons right">send</i>
+								Agregar <i class="material-icons right">send</i>
 							</button>
 						</div>
 					</div>
-					<input type="hidden" name="num_ing" value="1">
 				</form>
 			</div>
 			<div class="row light-blue lighten-2">		
-				<div class="col s12 m6">	
+				<div class="input-field col s12 m6">	
 					<a class="waves-effect waves-light btn" href='Principal.html'>
 						Regresar <i class="material-icons right">arrow_back	</i>
 					</a>
 				</div>
-				<div class="col s12 m6 right-align">
+				<div class="input-field col s12 m6 right-align">
 					<a class="waves-effect waves-light btn" href='Login.html'>
 						Salir <i class="material-icons right">close</i>
 					</a>
@@ -170,7 +153,7 @@
 		</div>
 
 		<!--Import jQuery before materialize.js-->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="js/jquery-3.3.1.min.js"></script>
 		<!-- Compiled and minified JavaScript -->
  		<script src="js/materialize.min.js"></script>
 		<script src="js/agregar.js"></script>
