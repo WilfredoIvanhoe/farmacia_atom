@@ -1,52 +1,3 @@
-<?php
-$servername = "localhost";
-$username = "farmacia";
-$password = "farmacia";
-$dbname = "farmacia"; 
-$idVia = 0;
-$idMedida = 0;
-$id = '';
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-$aliases= "producto.idProducto AS ID, CodigoDeBarras, producto.Nombre AS Nombre, PrecioPublico,
-		   PrecioProveedor, Cantidad, Concentracion, Lote, Caducidad,
-		   dosis.Nombre AS nombreDosis, presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia, 
-		   consumidor.Nombre AS nombreCons";
-
-$sql = "SELECT ".$aliases." FROM producto ".
-		"LEFT JOIN (producto_inventario, presentacion, dosis, consumidor, viadeadmin)".
-		"ON (producto.idPresentacion = presentacion.idPresentacion AND producto.idDosis = dosis.idDosis AND producto.idConsumidor = consumidor.idConsumidor AND producto.idViaDeAdmin = viadeadmin.idViaDeAdmin AND producto.idProducto = producto_inventario.idProducto)".
-		"WHERE producto.CodigoDeBarras ='".$_POST['codigo']."'";
-		
-echo '<p>'.$sql.'</p>';
-$result = $conn->query($sql);
-
-if ( $result->num_rows > 0) {
-	$row = $result->fetch_assoc();
-	$id = $row['ID'];
-    //echo "<p>".var_dump($row)."</p>";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-
-$aliases2 = "*";
-
-$sql = "select CONCAT(Nombre,' ',Concentracion,Medida) AS ingrediente from ingactivo WHERE idProducto= '".$id."'";
-$result2 = $conn->query($sql);
-/**$sql = "SELECT Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Concentracion,Cantidad,Medida,idConsumidor,FechaCad,Lote
-        FROM producto WHERE CodigoDeBarras ='".$_POST['codigo']."'";      
-$result = $conn->query($sql);
-**/
-$conn->close();
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -73,7 +24,7 @@ $conn->close();
 			<!-- TABLE -->
 			<div class="row">
 				<div class="col s12 m12 l12">
-					<table class="bordered">
+					<table class="stripped">
 						<thead>
 							<tr>
 								<th>Código de Barras</th>
@@ -92,59 +43,140 @@ $conn->close();
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>	
-									<?php echo $row['CodigoDeBarras']?>
-								</td>
-								<td>	
-									<?php echo $row['Nombre']?>
-								</td>
-								<td>	
-									<?php echo $row['Caducidad']?>
-								</td>
-								<td>	
-									<?php echo $row['Lote']?>
-								</td>
-								<td>	
-									<?php echo $row['PrecioPublico']?>
-								</td>
-								<td>	
-									<?php echo $row['PrecioProveedor']?>
-								</td>
-								<td>	
-									<?php echo $row['Cantidad']?>
-								</td>
-								<td>	
-									<?php echo $row['Concentracion']?>
-								</td>
-								<td>	
-									<?php echo $row['nombreDosis']?>
-								</td>
-								<td>	
-									<?php echo $row['nombrePres']?>
-								</td>
-								<td>	
-									<?php echo $row['nombreVia']?>
-								</td>
-								<td>	
-									<?php echo $row['nombreCons']?>
-								</td>
-								<td>
-									<?php
-										if ( $result2->num_rows > 0) {
-											while($row = $result2->fetch_assoc()) {
-												echo '<p>'.$row['ingrediente'].'</p>';
-											}
-									  
-										  }
-										  else {
-											echo mysql_error();
-										  }
-										  
-									?>	
-								</td>
-							</tr>
-						</tbody>
+<?php
+$servername = "localhost";
+$username = "farmacia";
+$password = "farmacia";
+$dbname = "farmacia"; 
+$id = '';
+
+
+// FORM INPUTS
+$nombre = $_POST['nombre'];
+$codigo = $_POST['codigo'];
+$ingrediente = $_POST['ingrediente'];
+
+//Main query
+$sql = <<< EOD
+		SELECT 
+			producto.idProducto AS ID, CodigoDeBarras, producto.Nombre AS Nombre,PrecioPublico, PrecioProveedor,
+			Cantidad, producto.Concentracion as Concentracion, Lote, Caducidad, dosis.Nombre AS nombreDosis,
+			presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia, consumidor.Nombre AS nombreCons
+		FROM
+			producto
+		LEFT JOIN 
+			(producto_inventario, presentacion, dosis, consumidor, viadeadmin)
+		ON
+			(producto.idPresentacion = presentacion.idPresentacion AND producto.idDosis = dosis.idDosis 
+			AND producto.idConsumidor = consumidor.idConsumidor AND producto.idViaDeAdmin = viadeadmin.idViaDeAdmin 
+			AND producto.idProducto = producto_inventario.idProducto) 
+EOD;
+
+//CHECK IF AT LEAST ONE IS NOT EMPTY
+if(isset($codigo) && !trim($codigo) == ''){
+	$where = "WHERE producto.CodigoDeBarras ='".$codigo."'";
+	$sql = $sql.$where; 
+}
+elseif(isset($nombre) && !trim($nombre) == ''){
+	$where = "WHERE producto.nombre ='".$nombre."'";
+	$sql = $sql.$where; 
+}elseif(isset($ingrediente) && !trim($ingrediente) == ''){
+	$where = "WHERE ingactivo.Nombre ='".$ingrediente."'";
+	//IN THIS CASE THE QUERY IS DIFFERENT
+	$sql = <<< EOD
+		SELECT 
+			producto.idProducto AS ID, CodigoDeBarras, producto.Nombre AS Nombre,PrecioPublico, PrecioProveedor,
+			Cantidad, CONCAT(producto.Concentracion,' ',producto.medida) AS Concentracion, Lote, Caducidad,
+			dosis.Nombre AS nombreDosis, presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia,
+			consumidor.Nombre AS nombreCons
+		FROM
+			ingactivo
+		LEFT JOIN 
+			(producto, producto_inventario, presentacion, dosis, consumidor, viadeadmin)
+		ON
+			(producto.idPresentacion = presentacion.idPresentacion AND producto.idDosis = dosis.idDosis 
+			AND producto.idConsumidor = consumidor.idConsumidor AND producto.idViaDeAdmin = viadeadmin.idViaDeAdmin 
+			AND ingactivo.idProducto = producto_inventario.idProducto AND ingactivo.idProducto = producto.idProducto)
+		$where;
+EOD;
+
+}else{
+	echo '<p> FAVOR DE LLENAR AL MENOS UN DATO</p>';
+}
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+		
+$result = $conn->query($sql);
+//echo '<p>'.$sql.'</p>';
+
+
+/** PRINTING THE TABLE BODY **/
+if ( $result->num_rows > 0) {
+	while($row = $result->fetch_assoc()){
+		//echo "<p>".var_dump($row)."</p>";
+		$id = $row['ID'];
+		$sql2 = "select CONCAT(Nombre,' ',Concentracion,Medida) AS ingrediente from ingactivo WHERE idProducto='".$id."'";
+		$result2 = $conn->query($sql2);
+		//PRINTING A ROW
+		echo <<<EOT
+		<tr>
+			<td>
+				{$row['CodigoDeBarras']}
+			</td>
+			<td>	
+				{$row['Nombre']}
+			</td>
+			<td>	
+				{$row['Caducidad']}
+			</td>
+			<td>	
+				{$row['Lote']}
+			</td>
+			<td>	
+				$ {$row['PrecioPublico']}
+			</td>
+			<td>	
+				$ {$row['PrecioProveedor']}
+			</td>
+			<td>	
+				{$row['Cantidad']}
+			</td>
+			<td>	
+				{$row['Concentracion']}
+			</td>
+			<td>	
+				{$row['nombreDosis']}
+			</td>
+			<td>	
+				{$row['nombrePres']}
+			</td>
+			<td>	
+				{$row['nombreVia']}
+			</td>
+			<td>	
+				{$row['nombreCons']}
+			</td>
+			<td>
+EOT;
+		if ( $result2->num_rows > 0) 
+			while($row2 = $result2->fetch_assoc()) 
+				echo '<p>'.$row2['ingrediente'].'</p>';
+		else 
+			echo mysql_error();
+		echo " </td> </tr>";
+	}
+}else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
+?>						
+						</tbody>	
 					</table>	
 				</div>
 			</div>	
