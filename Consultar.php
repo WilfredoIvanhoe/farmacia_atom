@@ -78,7 +78,7 @@ if(isset($codigo) && !trim($codigo) == ''){
 	$sql = $sql.$where; 
 }
 elseif(isset($nombre) && !trim($nombre) == ''){
-	$where = "WHERE producto.nombre ='".$nombre."'";
+	$where = "WHERE producto.Nombre ='".$nombre."'";
 	$sql = $sql.$where; 
 }elseif(isset($ingrediente) && !trim($ingrediente) == ''){
 	$where = "WHERE ingactivo.Nombre ='".$ingrediente."'";
@@ -87,7 +87,7 @@ elseif(isset($nombre) && !trim($nombre) == ''){
 		SELECT 
 			producto.idProducto AS ID, CodigoDeBarras, producto.Nombre AS Nombre,PrecioPublico, PrecioProveedor,
 			Cantidad, CONCAT(producto.Concentracion,' ',producto.medida) AS Concentracion, Lote, Caducidad,
-			dosis.Nombre AS nombreDosis, presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia,
+			CAST(CONVERT(dosis.Nombre USING utf8) AS binary) AS nombreDosis, presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia,
 			consumidor.Nombre AS nombreCons
 		FROM
 			ingactivo
@@ -171,7 +171,7 @@ EOT;
 		echo " </td> </tr>";
 	}
 }else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: No se encontró ningun registro. <br>" . $conn->error;
 }
 
 $conn->close();
