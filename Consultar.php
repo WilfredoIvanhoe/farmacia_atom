@@ -5,7 +5,7 @@ $password = "farmacia";
 $dbname = "farmacia"; 
 $idVia = 0;
 $idMedida = 0;
-
+$id = '';
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -14,23 +14,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$aliases= "CodigoDeBarras, producto.Nombre AS Nombre, FechaCad, Lote, PrecioPublico, PrecioProveedor, Cantidad, Concentracion,
+$aliases= "producto.idProducto AS ID, CodigoDeBarras, producto.Nombre AS Nombre, PrecioPublico,
+		   PrecioProveedor, Cantidad, Concentracion, Lote, Caducidad,
 		   dosis.Nombre AS nombreDosis, presentacion.Nombre AS nombrePres, viadeadmin.Nombre AS nombreVia, 
 		   consumidor.Nombre AS nombreCons";
 
-$sql = "SELECT ".$aliases." FROM producto 
-		LEFT JOIN (presentacion, dosis, consumidor, viadeadmin) 
-		ON (producto.idPresentacion = presentacion.idPresentacion AND producto.idDosis = dosis.idDosis AND producto.idConsumidor = consumidor.idConsumidor AND producto.idViaDeAdmin = viadeadmin.idViaDeAdmin) 
-		WHERE producto.CodigoDeBarras ='".$_POST['codigo']."'";     
+$sql = "SELECT ".$aliases." FROM producto ".
+		"LEFT JOIN (producto_inventario, presentacion, dosis, consumidor, viadeadmin)".
+		"ON (producto.idPresentacion = presentacion.idPresentacion AND producto.idDosis = dosis.idDosis AND producto.idConsumidor = consumidor.idConsumidor AND producto.idViaDeAdmin = viadeadmin.idViaDeAdmin AND producto.idProducto = producto_inventario.idProducto)".
+		"WHERE producto.CodigoDeBarras ='".$_POST['codigo']."'";
+		
+echo '<p>'.$sql.'</p>';
 $result = $conn->query($sql);
 
 if ( $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    echo "<p>".var_dump($row)."</p>";
+	$row = $result->fetch_assoc();
+	$id = $row['ID'];
+    //echo "<p>".var_dump($row)."</p>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
+$aliases2 = "*";
+
+$sql = "select CONCAT(Nombre,' ',Concentracion,Medida) AS ingrediente from ingactivo WHERE idProducto= '".$id."'";
+$result2 = $conn->query($sql);
 /**$sql = "SELECT Nombre,CodigoDeBarras,idPresentacion,idViaDeAdmin,idDosis,PrecioProveedor,PrecioPublico,Concentracion,Cantidad,Medida,idConsumidor,FechaCad,Lote
         FROM producto WHERE CodigoDeBarras ='".$_POST['codigo']."'";      
 $result = $conn->query($sql);
@@ -80,6 +88,7 @@ $conn->close();
 								<th>Presentación</th>
 								<th>Vía de Administración</th>
 								<th>Medicamento para</th>
+								<th>Ingredientes Activos</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -91,7 +100,7 @@ $conn->close();
 									<?php echo $row['Nombre']?>
 								</td>
 								<td>	
-									<?php echo $row['FechaCad']?>
+									<?php echo $row['Caducidad']?>
 								</td>
 								<td>	
 									<?php echo $row['Lote']?>
@@ -119,6 +128,20 @@ $conn->close();
 								</td>
 								<td>	
 									<?php echo $row['nombreCons']?>
+								</td>
+								<td>
+									<?php
+										if ( $result2->num_rows > 0) {
+											while($row = $result2->fetch_assoc()) {
+												echo '<p>'.$row['ingrediente'].'</p>';
+											}
+									  
+										  }
+										  else {
+											echo mysql_error();
+										  }
+										  
+									?>	
 								</td>
 							</tr>
 						</tbody>
