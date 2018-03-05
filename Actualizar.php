@@ -11,7 +11,6 @@ $database = "farmacia";
 		$asignacion = "\$".$nombre_campo."='".trim($valor)."';"; 
 		eval($asignacion); 
     }
-	/*$x = $_POST["id"];*/
 
 // CREATE AND CHECK CONNECTION
 	$conn = mysqli_connect($servername, $username, $password, $database);
@@ -21,8 +20,11 @@ $database = "farmacia";
 //STARTS PROGRAM
 
 	if($contrasena==$validacion){
-		$sql = "UPDATE producto SET Nombre='$nombre',CodigodeBarras='$codigodebarras',idPresentacion='$presentacion',idViaDeAdmin='$viadeadmin',idDosis='$iddosis',PrecioProveedor='$precioproveedor',PrecioPublico='$preciopublico',Cantidad='$cantidad',Concentracion='$concentracion',Medida='$medida',idConsumidor='$idconsumidor',laboratorio='$laboratorio'
-		WHERE ;
+		$sql = "UPDATE producto SET Nombre='$nombre',CodigodeBarras='$codigodebarras',idPresentacion='$presentacion',
+		idViaDeAdmin='$viadeadmin',idDosis='$iddosis',PrecioProveedor='$precioproveedor',PrecioPublico='$preciopublico',
+		Cantidad='$cantidad',Concentracion='$concentracion',Medida='$medida',idConsumidor='$idconsumidor',
+		laboratorio='$laboratorio'
+		WHERE codigodebarras='$' ;
     $resultado = mysqli_query($conn, $sql);
 	}
 	echo mysqli_affected_rows($conn);
