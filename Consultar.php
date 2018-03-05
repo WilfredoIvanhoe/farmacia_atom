@@ -45,8 +45,8 @@
 						<tbody>
 <?php
 $servername = "localhost";
-$username = "farmacia";
-$password = "farmacia";
+$username = "root";
+$password = "";
 $dbname = "farmacia"; 
 $id = '';
 
@@ -162,6 +162,8 @@ if ( $result->num_rows > 0) {
 				{$row['nombreCons']}
 			</td>
 			<td>
+			<a href="http://localhost/Actualizar.php/?id"> Editar </a>
+			
 EOT;
 		if ( $result2->num_rows > 0) 
 			while($row2 = $result2->fetch_assoc()) 
