@@ -27,6 +27,7 @@
 					<table class="stripped">
 						<thead>
 							<tr>
+								<th>Id Producto</th>
 								<th>Código de Barras</th>
 								<th>Nombre</th>
 								<th>Fecha de caducidad</th>
@@ -45,8 +46,8 @@
 						<tbody>
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "farmacia";
+$password = "farmacia";
 $dbname = "farmacia"; 
 $id = '';
 
@@ -114,7 +115,7 @@ if ($conn->connect_error) {
 $result = $conn->query($sql);
 //echo '<p>'.$sql.'</p>';
 
-
+$i = 0;
 /** PRINTING THE TABLE BODY **/
 if ( $result->num_rows > 0) {
 	while($row = $result->fetch_assoc()){
@@ -126,43 +127,47 @@ if ( $result->num_rows > 0) {
 		echo <<<EOT
 		<tr>
 			<td>
-				{$row['CodigoDeBarras']}
-			</td>
-			<td>	
-				{$row['Nombre']}
-			</td>
-			<td>	
-				{$row['Caducidad']}
-			</td>
-			<td>	
-				{$row['Lote']}
-			</td>
-			<td>	
-				$ {$row['PrecioPublico']}
-			</td>
-			<td>	
-				$ {$row['PrecioProveedor']}
-			</td>
-			<td>	
-				{$row['Cantidad']}
-			</td>
-			<td>	
-				{$row['Concentracion']}
-			</td>
-			<td>	
-				{$row['nombreDosis']}
-			</td>
-			<td>	
-				{$row['nombrePres']}
-			</td>
-			<td>	
-				{$row['nombreVia']}
-			</td>
-			<td>	
-				{$row['nombreCons']}
+			<span id="id_$i">{$row['ID']}</span>
 			</td>
 			<td>
-			<a href="http://localhost/Actualizar.php/?id"> Editar </a>
+			<span id="codigo_$i">{$row['CodigoDeBarras']}</span>
+			</td>
+			<td>	
+			<span id="nombre_$i">{$row['Nombre']}</span>
+			</td>
+			<td>	
+			<span id="caducidad_$i">{$row['Caducidad']}</span>
+			</td>
+			<td>	
+			<span id="lote_$i">{$row['Lote']}</span>
+			</td>
+			<td>	
+			<span id="preciopub_$i">$ {$row['PrecioPublico']}</span>
+			</td>
+			<td>	
+			<span id="precioprov_$i">$ {$row['PrecioProveedor']}</span>
+			</td>
+			<td>	
+			<span id="cantidad_$i">{$row['Cantidad']}</span>
+			</td>
+			<td>	
+			<span id="concentracion_$i">{$row['Concentracion']}</span>
+			</td>
+			<td>	
+			<span id="nombredosis_$i">{$row['nombreDosis']}</span>
+			</td>
+			<td>	
+			<span id="nombrepres_$i">{$row['nombrePres']}</span>
+			</td>
+			<td>	
+			<span id="nombrevia_$i">{$row['nombreVia']}</span>
+			</td>
+			<td>	
+			<span id="nombrecons_$i">{$row['nombreCons']}</span>
+			</td>
+			<td>
+			<a class="editar" id="editar_$i" data-num="$i" href="/modprod.php">Editar</a>
+			<input type="hidden" id="id_$i" value="$id">
 			
 EOT;
 		if ( $result2->num_rows > 0) 
@@ -171,6 +176,7 @@ EOT;
 		else 
 			echo mysql_error();
 		echo " </td> </tr>";
+		$i++;
 	}
 }else {
     echo "Error: No se encontró ningun registro. <br>" . $conn->error;
@@ -197,5 +203,8 @@ $conn->close();
 				</div>
 			</div>	
 		</div>
+		<script src="js/jquery-3.3.1.min.js"></script>
+ 		<script src="js/materialize.min.js"></script>
+		<script src="js/consultar.js"></script>
 	</body>
 </html>
